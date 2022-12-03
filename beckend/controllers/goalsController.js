@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const Goal = require('../models/goalModel');
 
 /**
  * **Description:** get goals
@@ -8,9 +9,9 @@ const asyncHandler = require('express-async-handler');
  * **Access:** private
  */
 const getGoals = asyncHandler(async (req, res) => {
-	res.status(200).json({
-		message: 'GET goals',
-	});
+	const goals = await Goal.find();
+
+	res.status(200).json(goals);
 });
 
 /**
@@ -21,9 +22,16 @@ const getGoals = asyncHandler(async (req, res) => {
  * **Access:** private
  */
 const createGoal = asyncHandler(async (req, res) => {
-	res.status(200).json({
-		message: 'SET goals',
-	});
+	const { text } = req.body;
+
+	if (!text) {
+		res.status(400);
+		throw new Error(`Invalid request. missing a text field`);
+	}
+
+	const goal = await Goal.create({ text });
+
+	res.status(200).json(goal);
 });
 
 /**
@@ -34,16 +42,18 @@ const createGoal = asyncHandler(async (req, res) => {
  * **Access:** private
  */
 const updateGoal = asyncHandler(async (req, res) => {
-	const { text } = req.body;
+	const goal = await Goal.findById(req.params.id);
 
-	if (!text) {
+	if (!goal) {
 		res.status(400);
-		throw new Error('Please add text');
+		throw new Error("Invalid request. Missing goal's id");
 	}
 
-	res.status(200).json({
-		message: 'PUT goals',
+	const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
+		new: true,
 	});
+
+	res.status(200).json(updateGoal);
 });
 
 /**
@@ -54,9 +64,16 @@ const updateGoal = asyncHandler(async (req, res) => {
  * **Access:** private
  */
 const deleteGoal = asyncHandler(async (req, res) => {
-	res.status(200).json({
-		message: 'DELETE goals',
-	});
+	const goal = await Goal.findById(req.params.id);
+
+	if (!goal) {
+		res.status(400);
+		throw new Error('Goal was not found');
+	}
+
+	await goal.remove();
+
+	res.status(200).json({ id: req.params.id });
 });
 
 module.exports = {
