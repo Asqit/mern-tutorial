@@ -3,19 +3,24 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Header from './components/Header';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	return (
-		<BrowserRouter>
-			<div className="container">
-				<Header />
-				<Routes>
-					<Route path="/register" element={<Register />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/" element={<Dashboard />} />
-				</Routes>
-			</div>
-		</BrowserRouter>
+		<>
+			<BrowserRouter>
+				<div className="container">
+					<Header />
+					<Routes>
+						<Route path="/register" element={<Register />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/" element={<Dashboard />} />
+					</Routes>
+				</div>
+			</BrowserRouter>
+			<ToastContainer />
+		</>
 	);
 }
 
