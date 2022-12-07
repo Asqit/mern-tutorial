@@ -1,0 +1,8 @@
+// development | production
+NODE_ENV=production
+
+PORT=8080
+
+MONGO_CONNECTION=mongodb+srv://<user>:<password>@cluster0.XXXXX.mongodb.net/mernapp
+
+JWT_SECRET=5eb2f4078848195dfa250346503909e19fec44cd1b05b2cd269b14baea6989985211aeedc0089609aef6aaf7fd6acd0a445c62e3b9146cadcf09c3e8633c01b22c523669e27fad85086fa4c2013874b2f4eeae44f0dbc1d56dc68a71b13e2193d710d61aa6b3711ef7ae883b26bd13368f08766a1bae844e1c68e61fecd15ece15d6dc422611ffc02b56e1f9a83ee5281dbc9b62f9214dd6e52342bb968b784e
